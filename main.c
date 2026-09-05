@@ -54,7 +54,7 @@ static void lv_linux_disp_init(void)
      lv_evdev_set_calibration(touch_indev, 0, 0, 1024, 480);
     //  lv_evdev_set_swap_axes(touch_indev, true);
      printf("[Touch OK] /dev/input/event6 init success\n");
-     printf(" Button!\n");
+     printf(" GUI!\n");
  }
 #endif
 
@@ -74,9 +74,8 @@ int main(void)
     lv_linux_touch_init();
 #endif
 
-    png_func();
-    // jpg_func();
-    // gif_func();
+    Car_Speed_Ometer_Dial_Show_Gui();
+    
     /*Handle LVGL tasks*/
     while(1) {
         lv_timer_handler();
