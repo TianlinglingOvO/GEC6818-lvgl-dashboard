@@ -20,8 +20,8 @@ void Car_Speed_Ometer_Dial_Show_Gui(void)
 
     /* 设置对象背景完全不透明 */
     lv_obj_set_style_bg_opa(scale_line, LV_OPA_COVER, 0);
-    /* 设置背景为粉红色 */
-    lv_obj_set_style_bg_color(scale_line, lv_palette_lighten(LV_PALETTE_PINK, 5), 0);
+    /* Black BG */
+    lv_obj_set_style_bg_color(scale_line,lv_color_hex(0xFFFFFF),0);
 
     /* 设置圆角为圆心 */
     lv_obj_set_style_radius(scale_line, LV_RADIUS_CIRCLE, 0);
