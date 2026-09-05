@@ -25,5 +25,8 @@ static void set_needle_line_value(void * obj, int32_t v);
  */
 void Car_Speed_Ometer_Dial_Show_Gui(void);
 
+void png_func(void);
+void jpg_func(void);
+void gif_func(void);
 
 #endif

@@ -11,6 +11,8 @@ static void set_needle_line_value(void* obj, int32_t v)
 
 void Car_Speed_Ometer_Dial_Show_Gui(void)
 {
+    /* Add git BG */
+    jpg_func();
     /* 创建环形刻度标对象，父对象为屏幕 */
     lv_obj_t* scale_line = lv_scale_create(lv_screen_active());
     /* 设置刻度表大小 宽、高 */
@@ -21,7 +23,8 @@ void Car_Speed_Ometer_Dial_Show_Gui(void)
     /* 设置对象背景完全不透明 */
     lv_obj_set_style_bg_opa(scale_line, LV_OPA_COVER, 0);
     /* Black BG */
-    lv_obj_set_style_bg_color(scale_line,lv_color_hex(0xFFFFFF),0);
+    lv_obj_set_style_bg_color(scale_line,lv_color_hex(0x000000),0);
+    
 
     /* 设置圆角为圆心 */
     lv_obj_set_style_radius(scale_line, LV_RADIUS_CIRCLE, 0);
@@ -43,6 +46,7 @@ void Car_Speed_Ometer_Dial_Show_Gui(void)
     /* LV_PART_INDICATOR：主刻度部分设置主刻度线长度为20像素 */
     lv_obj_set_style_length(scale_line, 20, LV_PART_INDICATOR);
 
+
     /* 设置刻度数据范围：最小值0，最大值260 */
     lv_scale_set_range(scale_line, 0, 260);
     /* 设置环形刻度总张开角度 270度 */
@@ -56,6 +60,19 @@ void Car_Speed_Ometer_Dial_Show_Gui(void)
     lv_obj_set_style_line_width(needle_line, 6, LV_PART_MAIN);
     /* 开启线条端点圆角 */
     lv_obj_set_style_line_rounded(needle_line, true, LV_PART_MAIN);
+
+    lv_obj_t* speed_label = lv_label_create(scale_line);
+    lv_label_set_text(speed_label, "km/h");
+    lv_obj_set_style_text_color(speed_label, lv_color_hex(0xFFFFFF), 0);
+    lv_obj_set_style_text_font(speed_label,&lv_font_montserrat_20, 0);
+    lv_obj_align(speed_label, LV_ALIGN_LEFT_MID, LV_PCT(43), LV_PCT(10));
+    
+    lv_obj_set_style_line_color(scale_line,lv_color_white(),LV_PART_ITEMS);
+    lv_obj_set_style_line_color(scale_line,lv_color_white(),LV_PART_INDICATOR);
+    lv_obj_set_style_text_color(scale_line,lv_color_white(),LV_PART_INDICATOR);
+    lv_obj_set_style_arc_color(scale_line, lv_color_white(), LV_PART_MAIN);
+
+    lv_obj_set_style_line_color(needle_line,lv_color_white(),LV_PART_MAIN);
 
     /* 定义动画结构体 */
     lv_anim_t anim_scale_line;
