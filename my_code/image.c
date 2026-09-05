@@ -10,7 +10,7 @@ void png_func(void)
 void jpg_func(void)
 {
     lv_obj_t* jpg_image = lv_image_create(lv_screen_active());
-    lv_image_set_src(jpg_image, "A:/1.jpg");
+    lv_image_set_src(jpg_image, "A:/kawaii.jpg");
     lv_obj_align(jpg_image,LV_ALIGN_CENTER,0,0);
 }
 

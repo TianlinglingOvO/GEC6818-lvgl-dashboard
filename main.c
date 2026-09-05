@@ -54,7 +54,7 @@ static void lv_linux_disp_init(void)
      lv_evdev_set_calibration(touch_indev, 0, 0, 1024, 480);
     //  lv_evdev_set_swap_axes(touch_indev, true);
      printf("[Touch OK] /dev/input/event6 init success\n");
-     printf(" GUI!\n");
+     printf(" DASH!\n");
  }
 #endif
 

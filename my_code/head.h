@@ -14,13 +14,6 @@ extern lv_style_t style;
 void lv_Chinese_Freetype_Font_TTF_Func(char * Font_Path, int Font_Size);
 
 /**
- * @brief 动画回调，使用LVGL内置API设置line指针位置
- * @param obj 刻度控件 scale_line
- * @param v 动画当前数值
- */
-static void set_needle_line_value(void * obj, int32_t v);
-
-/**
  * @brief show speed dashboard GUI 
  */
 void Car_Speed_Ometer_Dial_Show_Gui(void);

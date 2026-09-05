@@ -1,7 +1,32 @@
 #include "head.h"
 
-/* 表盘指针 */
-static lv_obj_t* needle_line;
+static lv_obj_t * needle_line;    /* 表盘指针 */
+static lv_obj_t * scale_line;     /* 表盘 */
+static int32_t speed_kmh = 0;     /* 速度 */
+static bool accel_held   = false; /* 加速按钮判断 */
+static bool brake_held   = false; /* 减速按钮判断 */
+static lv_obj_t * accel_btn;      /* 加速按钮 */
+static lv_obj_t * brake_btn;      /* 减速按钮 */
+static lv_obj_t * accel_lab;      /* 加速按钮标签 */
+static lv_obj_t * brake_lab;      /* 减速按钮标签 */
+
+static void Btn_Even_Func(lv_event_t* e)
+{
+    lv_obj_t* btn = lv_event_get_target(e);
+    lv_event_code_t code = lv_event_get_code(e);
+
+    if (btn == accel_btn)
+    {
+        if (code == LV_EVENT_PRESSED) accel_held = true;
+        if (code == LV_EVENT_RELEASED) accel_held = false;
+    }
+
+    if (btn == brake_btn)
+    {
+        if (code == LV_EVENT_PRESSED) brake_held = true;
+        if (code == LV_EVENT_RELEASED) brake_held = false;
+    }
+}
 
 static void set_needle_line_value(void* obj, int32_t v)
 {
@@ -9,12 +34,25 @@ static void set_needle_line_value(void* obj, int32_t v)
     lv_scale_set_line_needle_value(obj, needle_line, 150, v);
 }
 
+static void speed_timer_cb(lv_timer_t* t)
+{
+    (void)t;
+    if (accel_held) speed_kmh +=2;
+    else if (brake_held) speed_kmh -=3;
+    else speed_kmh -= 1;
+
+    if (speed_kmh < 0) speed_kmh = 0;
+    if (speed_kmh > 260) speed_kmh = 260;
+
+    set_needle_line_value(scale_line, speed_kmh);
+}
+
 void Car_Speed_Ometer_Dial_Show_Gui(void)
 {
     /* Add git BG */
     jpg_func();
     /* 创建环形刻度标对象，父对象为屏幕 */
-    lv_obj_t* scale_line = lv_scale_create(lv_screen_active());
+    scale_line = lv_scale_create(lv_screen_active());
     /* 设置刻度表大小 宽、高 */
     lv_obj_set_size(scale_line, 350, 350);
     /* 设置刻度标模式：环形， 刻度线向内 */
@@ -67,29 +105,50 @@ void Car_Speed_Ometer_Dial_Show_Gui(void)
     lv_obj_set_style_text_font(speed_label,&lv_font_montserrat_20, 0);
     lv_obj_align(speed_label, LV_ALIGN_LEFT_MID, LV_PCT(43), LV_PCT(10));
     
+    /* 将仪表盘刻度线整体设置为白色 */
     lv_obj_set_style_line_color(scale_line,lv_color_white(),LV_PART_ITEMS);
     lv_obj_set_style_line_color(scale_line,lv_color_white(),LV_PART_INDICATOR);
     lv_obj_set_style_text_color(scale_line,lv_color_white(),LV_PART_INDICATOR);
     lv_obj_set_style_arc_color(scale_line, lv_color_white(), LV_PART_MAIN);
-
+    
+    /* 将指针设置为白色 */
     lv_obj_set_style_line_color(needle_line,lv_color_white(),LV_PART_MAIN);
 
-    /* 定义动画结构体 */
-    lv_anim_t anim_scale_line;
-    /* 初始化动画变量 */
-    lv_anim_init(&anim_scale_line);
-    /* 设置动画操作对象为环形刻度scale_line */
-    lv_anim_set_var(&anim_scale_line, scale_line);
-    /* 设置动画每帧执行回调函数 set_needle_line_value，用来更新指针位置 */
-    lv_anim_set_exec_cb(&anim_scale_line, set_needle_line_value);
-    /* 单词动画持续时间3000ms */
-    lv_anim_set_duration(&anim_scale_line, 3000);
-    /* 设置无线循环播放 */
-    lv_anim_set_repeat_count(&anim_scale_line, LV_ANIM_REPEAT_INFINITE);
-    /* 回退动画时间3000ms，来回摆动 */
-    lv_anim_set_playback_duration(&anim_scale_line, 3000);
-    /* 动画数值区间：从0运动到260 */
-    lv_anim_set_values(&anim_scale_line, 0, 260);
-    /* 启动动画 */
-    lv_anim_start(&anim_scale_line);
+    /* 再屏幕创建按钮 */
+    accel_btn = lv_button_create(lv_screen_active());
+    brake_btn = lv_button_create(lv_screen_active());
+
+    /* 设置按钮大小 */
+    lv_obj_set_size(accel_btn, 100, 100);
+    lv_obj_set_size(brake_btn, 100, 100);
+
+    /* 设置按钮颜色 */
+    lv_obj_set_style_bg_color(accel_btn, lv_color_hex(0xff0000), 0);
+    lv_obj_set_style_bg_color(brake_btn, lv_color_hex(0x000000), 0);
+
+    /* 设置按钮位置 */
+    lv_obj_align(accel_btn, LV_ALIGN_CENTER, 200, -190);
+    lv_obj_align(brake_btn, LV_ALIGN_CENTER, 340, -190);
+    
+    /* 创建标签，父对象->按钮 */
+    accel_lab = lv_label_create(accel_btn);
+    brake_lab = lv_label_create(brake_btn);
+
+    /* 创建标签文本 */
+    lv_label_set_text(accel_lab,"ACC");
+    lv_label_set_text(brake_lab,"BRK");
+
+    /* 设置标签文本大小 */
+    lv_obj_set_style_text_font(accel_lab, &lv_font_montserrat_20, 0);
+    lv_obj_set_style_text_font(brake_lab, &lv_font_montserrat_20, 0);
+
+    /*设置标签位置*/
+    lv_obj_center(accel_lab);
+    lv_obj_center(brake_lab);
+
+    lv_obj_add_event_cb(accel_btn, Btn_Even_Func, LV_EVENT_ALL, NULL);
+    lv_obj_add_event_cb(brake_btn, Btn_Even_Func, LV_EVENT_ALL, NULL);
+
+    lv_timer_create(speed_timer_cb, 50, NULL);
+    set_needle_line_value(scale_line, 0);
 }
