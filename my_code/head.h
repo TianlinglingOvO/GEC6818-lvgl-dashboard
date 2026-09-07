@@ -22,4 +22,13 @@ void png_func(void);
 void jpg_func(void);
 void gif_func(void);
 
+int LED_Mode(char* LED_DRV_PATH, int status, int LED_IO_Number);
+void LED_ALL(int status);
+void LED_One(int status);
+void LED_Two(int status);
+void LED_Thr(int status);
+void LED_Four(int status);
+
+void Btn_Show_GUI(void);
+
 #endif

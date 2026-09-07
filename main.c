@@ -51,7 +51,7 @@ static void lv_linux_disp_init(void)
          return;
      }
      lv_indev_set_display(touch_indev, lv_display_get_default());
-     lv_evdev_set_calibration(touch_indev, 0, 0, 1024, 480);
+     lv_evdev_set_calibration(touch_indev, 0, 0, 1024, 600);
     //  lv_evdev_set_swap_axes(touch_indev, true);
      printf("[Touch OK] /dev/input/event6 init success\n");
      printf(" DASH!\n");
@@ -74,7 +74,8 @@ int main(void)
     lv_linux_touch_init();
 #endif
 
-    Car_Speed_Ometer_Dial_Show_Gui();
+    // Car_Speed_Ometer_Dial_Show_Gui();
+    Btn_Show_GUI();
     
     /*Handle LVGL tasks*/
     while(1) {
