@@ -17,6 +17,11 @@ void lv_Chinese_Freetype_Font_TTF_Func(char * Font_Path, int Font_Size);
  * @brief show speed dashboard GUI 
  */
 void Car_Speed_Ometer_Dial_Show_Gui(void);
+/**
+ * @brief Show tachometer dashboaed GUI
+ * 
+ */
+void Car_tachometer_Show_Gui(void);
 
 void png_func(void);
 void jpg_func(void);
@@ -29,6 +34,8 @@ void LED_Two(int status);
 void LED_Thr(int status);
 void LED_Four(int status);
 
-void Btn_Show_GUI(void);
+/*================= Test Func ================*/
+void Btn_Show_GUI_Test(void);
+void Turn_Left_Control_Func_Test(void);
 
 #endif

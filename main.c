@@ -6,7 +6,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
-#include "my_code/head.h" /* Define Head File */
+#include "drives/head.h" /* Define Head File */
 
 static const char *getenv_default(const char *name, const char *dflt)
 {
@@ -74,9 +74,11 @@ int main(void)
     lv_linux_touch_init();
 #endif
 
-    // Car_Speed_Ometer_Dial_Show_Gui();
-    Btn_Show_GUI();
-    
+    // png_func();
+    jpg_func();
+    // gif_func();
+    Car_Speed_Ometer_Dial_Show_Gui();
+    Car_tachometer_Show_Gui();
     /*Handle LVGL tasks*/
     while(1) {
         lv_timer_handler();

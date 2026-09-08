@@ -47,7 +47,7 @@ static void speed_timer_cb(lv_timer_t* t)
     set_needle_line_value(scale_line, speed_kmh);
 }
 
-void Car_Speed_Ometer_Dial_Show_Gui(void)
+void Car_Speed_Ometer_Dial_Show_Gui_Test(void)
 {
     /* Add git BG */
     jpg_func();

@@ -25,7 +25,7 @@ prefix 			?= /usr
 bindir 			?= $(prefix)/bin
 
 #Collect the files to compile
-MAINSRC          = ./main.c $(wildcard ./my_code/*.c)
+MAINSRC          = ./main.c $(wildcard ./drives/*.c)
 
 include $(LVGL_DIR)/lvgl/lvgl.mk
 

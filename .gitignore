@@ -70,4 +70,5 @@ Homework.md
 .github/
 .project
 .gitmodules
-./image/*
+design_docs/
+AGENTS.md

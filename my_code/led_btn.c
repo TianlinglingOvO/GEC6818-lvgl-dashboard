@@ -39,7 +39,7 @@ static void Led_All_Btn_Func(lv_event_t* e)
     lv_obj_set_style_bg_color(all_led_btn, all_on ? lv_color_hex(0xff0000) : lv_color_hex(0x888888), 0);
 }
 
-void Btn_Show_GUI(void)
+void Btn_Show_GUI_Test(void)
 {
     int i;
     for (i = 0; i < 4; i++)
