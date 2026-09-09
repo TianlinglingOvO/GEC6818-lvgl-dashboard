@@ -58,7 +58,7 @@ dkms.conf
 /Debug/
 
 # My ignore
-/my_code/*test*.c
+my_code/
 Homework.md
 /lvgl/tests/
 /lvgl/docs/
@@ -73,3 +73,4 @@ Homework.md
 design_docs/
 AGENTS.md
 image_debug/
+*:Zone.Identifier
