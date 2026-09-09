@@ -74,11 +74,11 @@ int main(void)
     lv_linux_touch_init();
 #endif
 
-    // png_func();
     jpg_func();
-    // gif_func();
     Car_Speed_Ometer_Dial_Show_Gui();
     Car_tachometer_Show_Gui();
+    Dash_Icon_Show_UI();
+    // LED_ALL(1);
     /*Handle LVGL tasks*/
     while(1) {
         lv_timer_handler();

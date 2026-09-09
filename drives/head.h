@@ -22,6 +22,11 @@ void Car_Speed_Ometer_Dial_Show_Gui(void);
  * 
  */
 void Car_tachometer_Show_Gui(void);
+/**
+ * @brief Show Dashboard icon UI
+ * 
+ */
+void Dash_Icon_Show_UI(void);
 
 void png_func(void);
 void jpg_func(void);

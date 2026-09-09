@@ -8,10 +8,16 @@ static int32_t speed_kmh = 0;     /* 速度 */
 
 
 
-static void set_needle_line_value(void* obj, int32_t v)
+static void set_speed_needle_value(void* obj, int32_t v)
 {
-    /* obj:scale刻度对象； needle_line指针对象； 150:指针长度； v:当前刻度值 */
-    lv_scale_set_line_needle_value(obj, needle_line, 150, v);
+    /* obj:scale刻度对象； needle_line指针对象； 120:指针长度； v:当前刻度值 */
+    lv_scale_set_line_needle_value(obj, needle_line, 120, v);
+}
+
+static void set_tach_neddle_value(void* obj, int32_t v)
+{
+    /* obj:scale刻度对象； tach_line指针对象； 120:指针长度； v:当前刻度值 */
+    lv_scale_set_line_needle_value(obj, tach_needle, 120, v);
 }
 
 void Car_Speed_Ometer_Dial_Show_Gui(void)
@@ -90,7 +96,7 @@ void Car_Speed_Ometer_Dial_Show_Gui(void)
     lv_obj_set_style_line_color(needle_line,lv_color_white(),LV_PART_MAIN);
 
 
-    set_needle_line_value(scale_line, 0);
+    set_speed_needle_value(scale_line, 0);
 }
 
 void Car_tachometer_Show_Gui(void)
@@ -165,5 +171,5 @@ void Car_tachometer_Show_Gui(void)
     /* 将指针设置为黑色 */
     lv_obj_set_style_line_color(tach_needle, lv_color_black(), LV_PART_MAIN);
 
-    lv_scale_set_line_needle_value(tach_scale, tach_needle, 150, 0);
+    set_tach_neddle_value(tach_scale, 0);
 }
