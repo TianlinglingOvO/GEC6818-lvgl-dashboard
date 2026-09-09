@@ -10,34 +10,77 @@ typedef struct
     int led;        // LED number(1~4)
 } dash_icon_t;
 
+typedef struct 
+{
+    lv_obj_t* obj;
+    int idx;
+    const char** imgs;
+    int n;
+}dash_cycle_t;
+
 static dash_icon_t turn_right = {
     .obj = NULL,
     .on = false,
-    .img_off = "A:turn_right_off1.png",
-    .img_on = "A:turn_right_on1.png",
+    .img_off = "A:turn_right_off.png",
+    .img_on = "A:turn_right_on.png",
     .led = 2
 };
 
+static dash_icon_t turn_left = {
+    .obj = NULL,
+    .on = false,
+    .img_off = "A:turn_left_off.png",
+    .img_on = "A:turn_left_on.png",
+    .led = 2
+};
+
+static dash_icon_t seat_belt = {
+    .obj = NULL,
+    .on = false,
+    .img_off = "A:seat_belt_off.png",
+    .img_on = NULL,
+    .led = 4
+};
+
+static const char * mode_imgs[] = {"A:eco_on.png", "A:comfort_on.png", "A:sport_on.png"};
+
+static dash_cycle_t car_modes = {
+    .idx = 0,
+    .imgs = mode_imgs,
+    .n = 3,
+    .obj = NULL
+};
+
+static const char * light_imgs[] = {"A:light_low_off.png", "A:light_low_on.png", "A:light_high_on.png"};
+
+static dash_cycle_t light_modes = {
+    .idx = 0,
+    .imgs = light_imgs,
+    .n = 3,
+    .obj = NULL
+};
 
 static void dash_icon_apply(dash_icon_t* ic)
 {
     const char* src = ic->on ? ic->img_on : ic->img_off;
-    if (src == NULL)
-    {
-        lv_obj_add_flag(ic->obj, LV_OBJ_FLAG_HIDDEN);
-        return;
-    }
-
-    lv_obj_remove_flag(ic->obj, LV_OBJ_FLAG_HIDDEN);
     lv_obj_set_style_bg_image_src(ic->obj, src, 0);
 
+    int lamp = ic->on; 
+    if (ic->img_on == NULL) lamp = !ic->on;
+
     switch(ic->led) {
-        case 1: LED_One(ic->on); break;
-        case 2: LED_Two(ic->on); break;
-        case 3: LED_Thr(ic->on); break;
-        case 4: LED_Four(ic->on); break;
+        case 1: LED_One(lamp); break;
+        case 2: LED_Two(lamp); break;
+        case 3: LED_Thr(lamp); break;
+        case 4: LED_Four(lamp); break;
         default: break;
     }
+}
+
+static void dash_cycle_apply(dash_cycle_t* dc)
+{
+    const char* src = dc->imgs[dc->idx];
+    lv_obj_set_style_bg_img_src(dc->obj, src, 0);
 }
 
 static void dash_icon_click(lv_event_t* e)
@@ -49,7 +92,16 @@ static void dash_icon_click(lv_event_t* e)
     dash_icon_apply(ic);
 }
 
-void dash_icon_create(lv_obj_t* parent, dash_icon_t* ic, int x, int y)
+static void dash_cycle_click(lv_event_t* e)
+{
+    if (lv_event_get_code(e) != LV_EVENT_CLICKED) return;
+
+    dash_cycle_t* dc = lv_event_get_user_data(e);
+    dc->idx = (dc->idx + 1) % dc->n;
+    dash_cycle_apply(dc);
+}
+
+static void dash_icon_create(lv_obj_t* parent, dash_icon_t* ic, int x, int y)
 {
     ic->obj = lv_obj_create(parent);
     lv_obj_set_size(ic->obj, 50, 50);
@@ -61,7 +113,34 @@ void dash_icon_create(lv_obj_t* parent, dash_icon_t* ic, int x, int y)
     dash_icon_apply(ic);
 }
 
+static void dash_cycle_create(lv_obj_t* parent, dash_cycle_t* dc, int x, int y)
+{
+    dc->obj = lv_obj_create(parent);
+    lv_obj_set_size(dc->obj, 50, 50);
+    lv_obj_set_style_bg_opa(dc->obj, LV_OPA_TRANSP, NULL);
+    lv_obj_set_style_border_width(dc->obj, 0, NULL);
+    lv_obj_set_style_shadow_width(dc->obj, 0, NULL);
+    lv_obj_align(dc->obj, LV_ALIGN_CENTER, x, y);
+    lv_obj_add_event_cb(dc->obj, dash_cycle_click, LV_EVENT_CLICKED, dc);
+    dash_cycle_apply(dc);
+}
+
+
 void Dash_Icon_Show_UI(void)
 {
-    dash_icon_create(lv_screen_active(),&turn_right, 50, 50);
+    dash_icon_create(lv_screen_active(),&turn_right, -200, -170);
+    dash_icon_create(lv_screen_active(),&turn_left, -280, -170);
+    dash_icon_create(lv_screen_active(),&seat_belt, -300, 0);
+    dash_cycle_create(lv_screen_active(),&car_modes, 200, -170);
+    dash_cycle_create(lv_screen_active(),&light_modes, 280, -170); 
+}
+
+bool dash_seatbelt_fastened(void)
+{
+    return seat_belt.on;
+}
+
+int dash_drive_mod(void)
+{
+    return car_modes.idx;
 }

@@ -63,6 +63,7 @@ static void lv_linux_disp_init(void)
 int main(void)
 {
     lv_init();  /* LVGL初始化函数 */
+    beep_init();
 
 
 #if LV_USE_LINUX_FBDEV  /* 显示设备初始化函数 */
@@ -78,6 +79,10 @@ int main(void)
     Car_Speed_Ometer_Dial_Show_Gui();
     Car_tachometer_Show_Gui();
     Dash_Icon_Show_UI();
+    Dash_Pedal_Show_UI();
+    Dash_Odo_Show_UI();
+    Dash_Clock_Show_UI();
+    Dash_Fuel_Temp_Show_UI();
     // LED_ALL(1);
     /*Handle LVGL tasks*/
     while(1) {

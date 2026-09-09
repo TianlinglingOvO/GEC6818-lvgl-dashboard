@@ -17,16 +17,42 @@ void lv_Chinese_Freetype_Font_TTF_Func(char * Font_Path, int Font_Size);
  * @brief show speed dashboard GUI 
  */
 void Car_Speed_Ometer_Dial_Show_Gui(void);
+
 /**
  * @brief Show tachometer dashboaed GUI
  * 
  */
 void Car_tachometer_Show_Gui(void);
+
 /**
  * @brief Show Dashboard icon UI
  * 
  */
 void Dash_Icon_Show_UI(void);
+
+/**
+ * @brief Show Dashboard pedal icon and control the speed 
+ * 
+ */
+void Dash_Pedal_Show_UI(void);
+
+/**
+ * @brief Show ODO Test
+ * 
+ */
+void Dash_Odo_Show_UI(void);
+
+/**
+ * @brief Show Clock UI
+ * 
+ */
+void Dash_Clock_Show_UI(void);
+
+/**
+ * @brief Show Fuel and Temp UI
+ * 
+ */
+void Dash_Fuel_Temp_Show_UI(void);
 
 void png_func(void);
 void jpg_func(void);
@@ -38,6 +64,14 @@ void LED_One(int status);
 void LED_Two(int status);
 void LED_Thr(int status);
 void LED_Four(int status);
+
+int beep_init(void);
+void beep_on(void);
+void beep_off(void);
+void beep_deinit(void);
+
+bool dash_seatbelt_fastened(void);
+int dash_drive_mod(void);
 
 /*================= Test Func ================*/
 void Btn_Show_GUI_Test(void);
