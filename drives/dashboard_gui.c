@@ -375,7 +375,7 @@ static void speed_timer_cb(lv_timer_t* t)
     // 速度大于0 油量下降 温度上升
     if (speed_kmh > 0) 
     {
-        fuel_pct -= 0.80f;
+        fuel_pct -= 0.40f;
         coolant_c += 0.20f;
     }
     // 停止时温度下降

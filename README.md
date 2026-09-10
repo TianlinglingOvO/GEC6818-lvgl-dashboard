@@ -4,9 +4,9 @@
 
 目标：在开发板上实现图形化汽车仪表盘 UI，并联动部分板载外设（LED / 蜂鸣器）。
 
-仓库：[`TianlinglingOvO/GEC6818-lvgl-dashboard`](https://github.com/TianlinglingOvO/GEC6818-lvgl-dashboard)
+## UI展示
 
-> 当前版本：`v1.0.0` 课设完成版
+![UI](/Show_UI.jpg)
 
 ## 功能一览
 
