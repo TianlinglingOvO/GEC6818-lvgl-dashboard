@@ -63,7 +63,7 @@ static void lv_linux_disp_init(void)
 int main(void)
 {
     lv_init();  /* LVGL初始化函数 */
-    beep_init();
+    beep_init();    /* 蜂鸣器初始化 */
 
 
 #if LV_USE_LINUX_FBDEV  /* 显示设备初始化函数 */
@@ -75,15 +75,14 @@ int main(void)
     lv_linux_touch_init();
 #endif
 
-    jpg_func();
-    Car_Speed_Ometer_Dial_Show_Gui();
-    Car_tachometer_Show_Gui();
-    Dash_Icon_Show_UI();
-    Dash_Pedal_Show_UI();
-    Dash_Odo_Show_UI();
-    Dash_Clock_Show_UI();
-    Dash_Fuel_Temp_Show_UI();
-    // LED_ALL(1);
+    jpg_func(); /* 背景图片 */
+    Car_Speed_Ometer_Dial_Show_Gui();   /* 速度仪表盘 */
+    Car_tachometer_Show_Gui();          /* 转速仪表盘 */
+    Dash_Icon_Show_UI();                /* 图标显示 */
+    Dash_Pedal_Show_UI();               /* 踏板显示 */
+    Dash_Odo_Show_UI();                 /* 里程显示 */
+    Dash_Clock_Show_UI();               /* 时间显示 */
+    Dash_Fuel_Temp_Show_UI();           /* 油箱温度显示 */
     /*Handle LVGL tasks*/
     while(1) {
         lv_timer_handler();

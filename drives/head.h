@@ -54,6 +54,21 @@ void Dash_Clock_Show_UI(void);
  */
 void Dash_Fuel_Temp_Show_UI(void);
 
+/**
+ * @brief 安全带状态辅助函数
+ * 
+ * @return true     安全带系上
+ * @return false   未系上安全带
+ */
+bool dash_seatbelt_fastened(void);
+
+/**
+ * @brief 车辆模式辅助函数
+ * 
+ * @return int 返回车辆模式的下标
+ */
+int dash_drive_mod(void);
+
 void png_func(void);
 void jpg_func(void);
 void gif_func(void);
@@ -69,12 +84,5 @@ int beep_init(void);
 void beep_on(void);
 void beep_off(void);
 void beep_deinit(void);
-
-bool dash_seatbelt_fastened(void);
-int dash_drive_mod(void);
-
-/*================= Test Func ================*/
-void Btn_Show_GUI_Test(void);
-void Turn_Left_Control_Func_Test(void);
 
 #endif
